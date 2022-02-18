@@ -2,11 +2,10 @@ package ru.zhbert.docslinter;
 
 import ru.zhbert.docslinter.service.FileChecker;
 
-import java.io.*;
-import java.sql.Time;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Timer;
 
 public class Main {
 
