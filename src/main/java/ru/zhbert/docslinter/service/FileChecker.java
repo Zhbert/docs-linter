@@ -7,7 +7,7 @@ public class FileChecker {
 
     ArrayList<String> dict;
     int dictMaxLen = 0;
-    int maxLines = 0;
+    Integer maxLines = 0;
 
     public FileChecker(ArrayList<String> dict) {
         this.dict = dict;
@@ -22,9 +22,16 @@ public class FileChecker {
 
         maxLines = getLinesCount(file);
         Integer currentLine = 0;
-        String Format = "| %-5s | %-" + dictMaxLen +"s | %-" + dictMaxLen + "s |%n";
+        int firstColLen = 6;
+        if (maxLines.toString().length() >= 6) {
+            firstColLen = maxLines.toString().length();
+        }
+        String format = "| %-" + firstColLen + "s | %-" +
+                dictMaxLen +"s | %-" +
+                dictMaxLen + "s |%n";
 
         System.out.println("Checking file: " + file.getName() + " from " + file.getParent() + "...");
+        System.out.format(format, "Line N", "In dict", "In docs");
 
         FileReader fr = new FileReader(file);
         BufferedReader reader = new BufferedReader(fr);
@@ -35,7 +42,7 @@ public class FileChecker {
                 if (line.toLowerCase().contains(word.toLowerCase())) {
                     int start = line.toLowerCase().indexOf(word.toLowerCase());
                     int end = start + word.length();
-                    System.out.format(Format, currentLine.toString(), word, line.substring(start, end));
+                    System.out.format(format, currentLine.toString(), word, line.substring(start, end));
                 }
             }
             line = reader.readLine();
