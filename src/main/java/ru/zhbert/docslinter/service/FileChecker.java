@@ -29,12 +29,11 @@ public class FileChecker {
         String format = "| %-" + firstColLen + "s | %-" +
                 dictMaxLen +"s | %-" +
                 dictMaxLen + "s |%n";
-        String horizontalLine = getHorizontalLine(firstColLen, dictMaxLen);
 
         System.out.println("Checking file: " + file.getName() + " from " + file.getParent() + "...");
-        System.out.println(horizontalLine);
+        System.out.println(getHorizontalLineWithCornersUp(firstColLen, dictMaxLen));
         System.out.format(format, "Line N", "In dict", "In docs");
-        System.out.println(horizontalLine);
+        System.out.println(getHorizontalLine(firstColLen, dictMaxLen));
 
         FileReader fr = new FileReader(file);
         BufferedReader reader = new BufferedReader(fr);
@@ -50,7 +49,7 @@ public class FileChecker {
             }
             line = reader.readLine();
         }
-        System.out.println(horizontalLine);
+        System.out.println(getHorizontalLineWithCornersDown(firstColLen, dictMaxLen));
     }
 
     private Integer getLinesCount(File file) throws IOException {
@@ -77,6 +76,40 @@ public class FileChecker {
             result.append("-");
         }
         result.append("-|");
+        return result.toString();
+    }
+
+    private String getHorizontalLineWithCornersUp(Integer firstColLen, Integer dictMaxLen) {
+        StringBuilder result = new StringBuilder("┌-");
+        for (int i = 0; i < firstColLen; i++) {
+            result.append("-");
+        }
+        result.append("-╷-");
+        for (int i = 0; i < dictMaxLen; i++) {
+            result.append("-");
+        }
+        result.append("-╷-");
+        for (int i = 0; i < dictMaxLen; i++) {
+            result.append("-");
+        }
+        result.append("-┐");
+        return result.toString();
+    }
+
+    private String getHorizontalLineWithCornersDown(Integer firstColLen, Integer dictMaxLen) {
+        StringBuilder result = new StringBuilder("└-");
+        for (int i = 0; i < firstColLen; i++) {
+            result.append("-");
+        }
+        result.append("-╵-");
+        for (int i = 0; i < dictMaxLen; i++) {
+            result.append("-");
+        }
+        result.append("-╵-");
+        for (int i = 0; i < dictMaxLen; i++) {
+            result.append("-");
+        }
+        result.append("-┘");
         return result.toString();
     }
 
