@@ -29,9 +29,12 @@ public class FileChecker {
         String format = "| %-" + firstColLen + "s | %-" +
                 dictMaxLen +"s | %-" +
                 dictMaxLen + "s |%n";
+        String horizontalLine = getHorizontalLine(firstColLen, dictMaxLen);
 
         System.out.println("Checking file: " + file.getName() + " from " + file.getParent() + "...");
+        System.out.println(horizontalLine);
         System.out.format(format, "Line N", "In dict", "In docs");
+        System.out.println(horizontalLine);
 
         FileReader fr = new FileReader(file);
         BufferedReader reader = new BufferedReader(fr);
@@ -47,6 +50,7 @@ public class FileChecker {
             }
             line = reader.readLine();
         }
+        System.out.println(horizontalLine);
     }
 
     private Integer getLinesCount(File file) throws IOException {
@@ -57,6 +61,23 @@ public class FileChecker {
             count++;
         }
         return count;
+    }
+
+    private String getHorizontalLine(Integer firstColLen, Integer dictMaxLen) {
+        StringBuilder result = new StringBuilder("|-");
+        for (int i = 0; i < firstColLen; i++) {
+            result.append("-");
+        }
+        result.append("-|-");
+        for (int i = 0; i < dictMaxLen; i++) {
+            result.append("-");
+        }
+        result.append("-|-");
+        for (int i = 0; i < dictMaxLen; i++) {
+            result.append("-");
+        }
+        result.append("-|");
+        return result.toString();
     }
 
     public ArrayList<String> getDict() {
