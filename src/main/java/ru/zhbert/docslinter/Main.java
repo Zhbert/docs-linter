@@ -1,6 +1,6 @@
 package ru.zhbert.docslinter;
 
-import ru.zhbert.docslinter.service.FileChecker;
+import ru.zhbert.docslinter.service.CheckFileService;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +14,8 @@ public class Main {
         System.out.println("Started at " + new Date().toString());
         ArrayList<String> dict = new ArrayList<String>();
         dict.add("web-интерфейс");
-        FileChecker fileChecker = new FileChecker(dict);
+        CheckFileService checkFileService = new CheckFileService(dict);
         File file = new File("/home/zhbert/testfile");
-        fileChecker.checkFile(file);
+        checkFileService.checkFile(file);
         }
 }
