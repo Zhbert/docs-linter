@@ -24,29 +24,29 @@ public class TableLinesService {
 
         temp = new StringBuilder("┌-");
         temp.append(colFirstLine.toString())
-                .append("-╷-")
+                .append("-┬-")
                 .append(colSecondLine.toString())
-                .append("-╷-")
+                .append("-┬-")
                 .append(colSecondLine.toString())
                 .append("-┐");
         this.upLine = temp.toString();
 
         temp = new StringBuilder("└-");
         temp.append(colFirstLine.toString())
-                .append("-╵-")
+                .append("-┴-")
                 .append(colSecondLine.toString())
-                .append("-╵-")
+                .append("-┴-")
                 .append(colSecondLine.toString())
                 .append("-┘");
         this.downLine = temp.toString();
 
-        temp = new StringBuilder("|-");
+        temp = new StringBuilder("├-");
         temp.append(colFirstLine.toString())
-                .append("-|-")
+                .append("-┼-")
                 .append(colSecondLine.toString())
-                .append("-|-")
+                .append("-┼-")
                 .append(colSecondLine.toString())
-                .append("-|");
+                .append("-┤");
         this.mediumLine = temp.toString();
     }
 
