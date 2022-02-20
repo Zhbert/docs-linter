@@ -3,13 +3,13 @@ package ru.zhbert.docslinter.service;
 import java.io.*;
 import java.util.ArrayList;
 
-public class FileChecker {
+public class CheckFileService {
 
     ArrayList<String> dict;
     int dictMaxLen = 0;
     Integer maxLines = 0;
 
-    public FileChecker(ArrayList<String> dict) {
+    public CheckFileService(ArrayList<String> dict) {
         this.dict = dict;
         for (String word : dict) {
             if (word.length() > dictMaxLen) {
