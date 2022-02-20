@@ -29,11 +29,12 @@ public class CheckFileService {
         String format = "| %-" + firstColLen + "s | %-" +
                 dictMaxLen +"s | %-" +
                 dictMaxLen + "s |%n";
+        TableLinesService tableLinesService = new TableLinesService(dictMaxLen, firstColLen);
 
         System.out.println("Checking file: " + file.getName() + " from " + file.getParent() + "...");
-        System.out.println(getHorizontalLineWithCornersUp(firstColLen, dictMaxLen));
+        tableLinesService.printUpLine();
         System.out.format(format, "Line N", "In dict", "In docs");
-        System.out.println(getHorizontalLine(firstColLen, dictMaxLen));
+        tableLinesService.printMediumLine();
 
         FileReader fr = new FileReader(file);
         BufferedReader reader = new BufferedReader(fr);
@@ -49,7 +50,7 @@ public class CheckFileService {
             }
             line = reader.readLine();
         }
-        System.out.println(getHorizontalLineWithCornersDown(firstColLen, dictMaxLen));
+        tableLinesService.printDownLine();
     }
 
     private Integer getLinesCount(File file) throws IOException {
@@ -60,57 +61,6 @@ public class CheckFileService {
             count++;
         }
         return count;
-    }
-
-    private String getHorizontalLine(Integer firstColLen, Integer dictMaxLen) {
-        StringBuilder result = new StringBuilder("|-");
-        for (int i = 0; i < firstColLen; i++) {
-            result.append("-");
-        }
-        result.append("-|-");
-        for (int i = 0; i < dictMaxLen; i++) {
-            result.append("-");
-        }
-        result.append("-|-");
-        for (int i = 0; i < dictMaxLen; i++) {
-            result.append("-");
-        }
-        result.append("-|");
-        return result.toString();
-    }
-
-    private String getHorizontalLineWithCornersUp(Integer firstColLen, Integer dictMaxLen) {
-        StringBuilder result = new StringBuilder("┌-");
-        for (int i = 0; i < firstColLen; i++) {
-            result.append("-");
-        }
-        result.append("-╷-");
-        for (int i = 0; i < dictMaxLen; i++) {
-            result.append("-");
-        }
-        result.append("-╷-");
-        for (int i = 0; i < dictMaxLen; i++) {
-            result.append("-");
-        }
-        result.append("-┐");
-        return result.toString();
-    }
-
-    private String getHorizontalLineWithCornersDown(Integer firstColLen, Integer dictMaxLen) {
-        StringBuilder result = new StringBuilder("└-");
-        for (int i = 0; i < firstColLen; i++) {
-            result.append("-");
-        }
-        result.append("-╵-");
-        for (int i = 0; i < dictMaxLen; i++) {
-            result.append("-");
-        }
-        result.append("-╵-");
-        for (int i = 0; i < dictMaxLen; i++) {
-            result.append("-");
-        }
-        result.append("-┘");
-        return result.toString();
     }
 
     public ArrayList<String> getDict() {
