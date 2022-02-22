@@ -17,5 +17,5 @@ public class Main {
         CheckFileService checkFileService = new CheckFileService(dict);
         File file = new File("/home/zhbert/testfile");
         checkFileService.checkFile(file);
-        }
+    }
 }
