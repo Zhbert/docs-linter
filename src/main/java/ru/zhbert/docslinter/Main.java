@@ -1,7 +1,10 @@
 package ru.zhbert.docslinter;
 
+import ru.zhbert.docslinter.domain.DictTerm;
 import ru.zhbert.docslinter.service.CheckFileService;
+import ru.zhbert.docslinter.service.dicts.DictLoadService;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +15,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("Docs Linter v.1.0");
         System.out.println("Started at " + new Date().toString());
+        DictLoadService dictLoadService = new DictLoadService();
+        ArrayList<DictTerm> newDict = dictLoadService.getDict();
         ArrayList<String> dict = new ArrayList<String>();
         dict.add("web-интерфейс");
         CheckFileService checkFileService = new CheckFileService(dict);
