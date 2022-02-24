@@ -1,6 +1,8 @@
 package ru.zhbert.docslinter;
 
+import ru.zhbert.docslinter.domain.DictTerm;
 import ru.zhbert.docslinter.service.CheckFileService;
+import ru.zhbert.docslinter.service.dicts.DictLoadService;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +14,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("Docs Linter v.1.0");
         System.out.println("Started at " + new Date().toString());
-        ArrayList<String> dict = new ArrayList<String>();
+        DictLoadService dictLoadService = new DictLoadService();
+        ArrayList<DictTerm> newDict = dictLoadService.getDict();
+        ArrayList<String> dict = new ArrayList<>();
         dict.add("web-интерфейс");
         CheckFileService checkFileService = new CheckFileService(dict);
         File file = new File("/home/zhbert/testfile");
         checkFileService.checkFile(file);
-        }
+    }
 }
