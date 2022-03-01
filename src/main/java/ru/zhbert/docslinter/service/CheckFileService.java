@@ -1,19 +1,21 @@
 package ru.zhbert.docslinter.service;
 
+import ru.zhbert.docslinter.domain.DictTerm;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class CheckFileService {
 
-    ArrayList<String> dict;
+    ArrayList<DictTerm> dict;
     int dictMaxLen = 0;
     Integer maxLines = 0;
 
-    public CheckFileService(ArrayList<String> dict) {
+    public CheckFileService(ArrayList<DictTerm> dict) {
         this.dict = dict;
-        for (String word : dict) {
-            if (word.length() > dictMaxLen) {
-                dictMaxLen = word.length();
+        for (DictTerm dictTerm : dict) {
+            if (dictTerm.getMainForm().length() > dictMaxLen) {
+                dictMaxLen = dictTerm.getMainForm().length();
             }
         }
     }
@@ -41,11 +43,11 @@ public class CheckFileService {
         String line = reader.readLine();
         while (line != null) {
             currentLine++;
-            for (String word : dict) {
-                if (line.toLowerCase().contains(word.toLowerCase())) {
-                    int start = line.toLowerCase().indexOf(word.toLowerCase());
-                    int end = start + word.length();
-                    System.out.format(format, currentLine.toString(), word, line.substring(start, end));
+            for (DictTerm dictTerm : dict) {
+                if (line.toLowerCase().contains(dictTerm.getMainForm().toLowerCase())) {
+                    int start = line.toLowerCase().indexOf(dictTerm.getMainForm().toLowerCase());
+                    int end = start + dictTerm.getMainForm().length();
+                    System.out.format(format, currentLine.toString(), dictTerm.getMainForm(), line.substring(start, end));
                 }
             }
             line = reader.readLine();
@@ -63,11 +65,11 @@ public class CheckFileService {
         return count;
     }
 
-    public ArrayList<String> getDict() {
+    public ArrayList<DictTerm> getDict() {
         return dict;
     }
 
-    public void setDict(ArrayList<String> dict) {
+    public void setDict(ArrayList<DictTerm> dict) {
         this.dict = dict;
     }
 }
