@@ -15,9 +15,7 @@ public class Main {
         System.out.println("Docs Linter v.1.0");
         System.out.println("Started at " + new Date().toString());
         DictLoadService dictLoadService = new DictLoadService();
-        ArrayList<DictTerm> newDict = dictLoadService.getDict();
-        ArrayList<String> dict = new ArrayList<>();
-        dict.add("web-интерфейс");
+        ArrayList<DictTerm> dict = dictLoadService.getDict();
         CheckFileService checkFileService = new CheckFileService(dict);
         File file = new File("/home/zhbert/testfile");
         checkFileService.checkFile(file);
