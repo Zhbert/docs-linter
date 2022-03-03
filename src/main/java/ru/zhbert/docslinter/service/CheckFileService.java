@@ -47,7 +47,17 @@ public class CheckFileService {
                 if (line.toLowerCase().contains(dictTerm.getMainForm().toLowerCase())) {
                     int start = line.toLowerCase().indexOf(dictTerm.getMainForm().toLowerCase());
                     int end = start + dictTerm.getMainForm().length();
-                    System.out.format(format, currentLine.toString(), dictTerm.getMainForm(), line.substring(start, end));
+                    String innerStr = line.substring(start, end);
+                    if (!innerStr.equals(dictTerm.getMainForm())) {
+                        System.out.format(format, currentLine.toString(),
+                                dictTerm.getMainForm(), innerStr);
+                    }
+                    if (start == 0) {
+                        if (!innerStr.equals(dictTerm.getFirstFromLineForm())) {
+                            System.out.format(format, currentLine.toString(),
+                                    dictTerm.getFirstFromLineForm(), innerStr);
+                        }
+                    }
                 }
             }
             line = reader.readLine();
