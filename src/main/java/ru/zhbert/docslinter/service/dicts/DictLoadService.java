@@ -52,7 +52,6 @@ public class DictLoadService {
         String line = reader.readLine();
         while (line != null) {
             DictTerm dictTerm = new DictTerm();
-            ArrayList<String> incForms = new ArrayList<>();
             String[] parts = line.split(";");
             if (parts.length > 0 && parts.length <= 3) {
                 if (!parts[0].isEmpty()) {
