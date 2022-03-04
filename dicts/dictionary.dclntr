@@ -1,14 +1,14 @@
 bare metal;Bare metal
-bootstrap;Bootstrap
-build;Build
+bootstrap;Bootstrap;бутстрап
+build;Build;билд
 cloud provider;Cloud provider
 endpoint;Endpoint
 ID;ID
-JSON-файл;JSON-файл;JSON файл
+JSON-файл;JSON-файл
 multi-line-строка;Multi-line-строка
 Open Source-утилита;Open Source-утилита
-patch-релиз;Patch-релиз
-production-окружение;Production-окружение
+patch-релиз;Patch-релиз;патч-релиз
+production-окружение;Production-окружение;продакшн-окружение
 reverse proxy;Reverse proxy
-web-интерфейс;Web-интерфейс
-worker;Worker
+web-интерфейс;Web-интерфейс;веб-интерфейс
+worker;Worker;воркер
