@@ -48,14 +48,25 @@ public class CheckFileService {
                     int start = line.toLowerCase().indexOf(dictTerm.getMainForm().toLowerCase());
                     int end = start + dictTerm.getMainForm().length();
                     String innerStr = line.substring(start, end);
-                    if (!innerStr.equals(dictTerm.getMainForm())) {
-                        System.out.format(format, currentLine.toString(),
-                                dictTerm.getMainForm(), innerStr);
+                    String correctForm = "";
+                    if (start > 0) {
+                        correctForm = dictTerm.getMainForm();
+                    } else correctForm = dictTerm.getFirstFromLineForm();
+                    if (!innerStr.equals(correctForm)) {
+                        System.out.format(format, currentLine.toString(), correctForm, innerStr);
                     }
-                    if (start == 0) {
-                        if (!innerStr.equals(dictTerm.getFirstFromLineForm())) {
-                            System.out.format(format, currentLine.toString(),
-                                    dictTerm.getFirstFromLineForm(), innerStr);
+                }
+                if (!dictTerm.getWrongForms().isEmpty()) {
+                    for (String wrongForm : dictTerm.getWrongForms()) {
+                        if (line.toLowerCase().contains(wrongForm.toLowerCase())) {
+                            int start = line.toLowerCase().indexOf(wrongForm.toLowerCase());
+                            int end = start + wrongForm.length();
+                            String innerStr = line.substring(start, end);
+                            String correctForm = "";
+                            if (start > 0) {
+                                correctForm = dictTerm.getMainForm();
+                            } else correctForm = dictTerm.getFirstFromLineForm();
+                            System.out.format(format, currentLine.toString(), correctForm, innerStr);
                         }
                     }
                 }

@@ -30,7 +30,7 @@ public class DictLoadService {
         try {
             Files.walk(Paths.get(settingsPath))
                     .forEach(file -> {
-                        if(file.toFile().isFile() && file.toFile().getPath().endsWith(".dclntr")){
+                        if (file.toFile().isFile() && file.toFile().getPath().endsWith(".dclntr")) {
                             dictFinded.set(true);
                             System.out.println("Dictionary found: " + file.getFileName());
                             try {
@@ -53,11 +53,18 @@ public class DictLoadService {
         while (line != null) {
             DictTerm dictTerm = new DictTerm();
             String[] parts = line.split(";");
-            if (!parts[0].isEmpty()) {
-                dictTerm.setMainForm(parts[0]);
-            }
-            if (!parts[1].isEmpty()) {
-                dictTerm.setFirstFromLineForm(parts[1]);
+            if (parts.length > 0 && parts.length <= 3) {
+                if (!parts[0].isEmpty()) {
+                    dictTerm.setMainForm(parts[0]);
+                }
+                if (!parts[1].isEmpty()) {
+                    dictTerm.setFirstFromLineForm(parts[1]);
+                }
+                if (parts.length == 3) {
+                    if (!parts[2].isEmpty()) {
+                        dictTerm.addWrongForm(parts[2]);
+                    }
+                }
             }
             this.dictTerms.add(dictTerm);
             line = reader.readLine();

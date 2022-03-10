@@ -14,6 +14,7 @@ public class DictTerm {
     }
 
     public DictTerm() {
+        wrongForms = new ArrayList<>();
     }
 
     public String getMainForm() {
@@ -38,5 +39,9 @@ public class DictTerm {
 
     public void setWrongForms(ArrayList<String> wrongForms) {
         this.wrongForms = wrongForms;
+    }
+
+    public void addWrongForm(String form) {
+        this.wrongForms.add(form);
     }
 }
