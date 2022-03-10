@@ -43,7 +43,10 @@ public class DictLoadService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (!dictFinded.get()) System.out.println("Dictionary files not found!");
+        if (!dictFinded.get()) {
+            System.out.println("Dictionary files not found!");
+            System.exit(1);
+        }
     }
 
     private void parseDictionary(File dict) throws IOException {
