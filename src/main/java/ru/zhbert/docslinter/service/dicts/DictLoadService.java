@@ -2,14 +2,12 @@ package ru.zhbert.docslinter.service.dicts;
 
 import ru.zhbert.docslinter.domain.DictTerm;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class DictLoadService {
 
@@ -45,6 +43,12 @@ public class DictLoadService {
         }
         if (!dictFinded.get()) {
             System.out.println("Dictionary files not found!");
+            if (copyDictFromResources()) {
+                System.out.println("The built-in dictionary has been copied!");
+            } else {
+                System.out.println("Something's wrong!");
+                System.exit(1);
+            }
             System.exit(1);
         }
     }
@@ -71,6 +75,22 @@ public class DictLoadService {
             }
             this.dictTerms.add(dictTerm);
             line = reader.readLine();
+        }
+    }
+
+    private boolean copyDictFromResources() {
+        try (InputStream inputStream = getClass().getResourceAsStream("/dictionary.dclntr");
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String contents = reader.lines()
+                    .collect(Collectors.joining(System.lineSeparator()));
+            try(FileWriter writer = new FileWriter(settingsPath +
+                    File.separator + "dictionary.dclntr", false)) {
+                writer.write(contents);
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
