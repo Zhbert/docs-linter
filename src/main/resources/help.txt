@@ -1,0 +1,7 @@
+--------------------------------------------------------------------------------
+DOCS-LINTER v.1.0
+A simple utility for checking documentation.
+
+Available commands:
+  --help (-h): Show this help text.
+--------------------------------------------------------------------------------
