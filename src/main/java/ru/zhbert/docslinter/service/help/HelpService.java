@@ -1,26 +1,21 @@
 package ru.zhbert.docslinter.service.help;
 
 import java.io.*;
+import java.util.stream.Collectors;
 
 public class HelpService {
 
-    File helpFile;
+    String contents;
 
     public HelpService() throws IOException {
-        try (InputStream in = getClass().getResourceAsStream("/main/java/ru/zhbert/resource/help");
-             BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-            // Use resource
+        try (InputStream inputStream = getClass().getResourceAsStream("/help.txt");
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            contents = reader.lines()
+                    .collect(Collectors.joining(System.lineSeparator()));
         }
-
     }
 
-    public void viewHelp() throws IOException {
-        FileReader fr = new FileReader(helpFile);
-        BufferedReader reader = new BufferedReader(fr);
-        String line = reader.readLine();
-        while (line != null) {
-            System.out.println(line);
-            line = reader.readLine();
-        }
+    public void viewHelp() {
+        System.out.println(contents);
     }
 }

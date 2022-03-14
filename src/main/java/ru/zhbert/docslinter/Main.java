@@ -21,7 +21,7 @@ public class Main {
         if (args.length > 0) {
             for (String arg : args) {
                 switch (arg) {
-                    case "--help":
+                    case "--help.txt":
                     case "-h":
                         HelpService helpService = new HelpService();
                         helpService.viewHelp();
@@ -29,7 +29,7 @@ public class Main {
                 }
             }
         } else System.out.println("You must specify the file to check or the" +
-                " parameters of the application. Read --help for more information.");
+                " parameters of the application. Read --help.txt for more information.");
 
         CheckFileService checkFileService = new CheckFileService(dict);
         File file = new File("/home/zhbert/testfile");
