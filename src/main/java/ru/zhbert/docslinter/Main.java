@@ -21,7 +21,7 @@ public class Main {
         if (args.length > 0) {
             for (String arg : args) {
                 switch (arg) {
-                    case "--help.txt":
+                    case "--help":
                     case "-h":
                         HelpService helpService = new HelpService();
                         helpService.viewHelp();
