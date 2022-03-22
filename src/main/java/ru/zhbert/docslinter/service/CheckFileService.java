@@ -3,6 +3,8 @@ package ru.zhbert.docslinter.service;
 import ru.zhbert.docslinter.domain.DictTerm;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class CheckFileService {
@@ -21,7 +23,6 @@ public class CheckFileService {
     }
 
     public void checkFile(File file) throws IOException {
-
         maxLines = getLinesCount(file);
         Integer currentLine = 0;
         int firstColLen = 6;
@@ -74,6 +75,29 @@ public class CheckFileService {
             line = reader.readLine();
         }
         tableLinesService.printDownLine();
+    }
+
+    public void checkFilesInFolder(String path) {
+        try {
+            Files.walk(Paths.get(path))
+                    .forEach(file -> {
+                        String fileName = file.getFileName().toString();
+                        int i = fileName.lastIndexOf('.');
+                        if (i > 0) {
+                            if (fileName.substring(i+1).equals("md") ||
+                                    fileName.substring(i+1).equals("txt") ||
+                                    fileName.substring(i+1).equals("liquid")) {
+                                try {
+                                    checkFile(file.toFile());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Integer getLinesCount(File file) throws IOException {
