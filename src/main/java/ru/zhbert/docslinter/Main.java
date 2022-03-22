@@ -1,14 +1,8 @@
 package ru.zhbert.docslinter;
 
-import ru.zhbert.docslinter.domain.DictTerm;
 import ru.zhbert.docslinter.service.ArgumentsService;
-import ru.zhbert.docslinter.service.CheckFileService;
-import ru.zhbert.docslinter.service.dicts.DictLoadService;
-import ru.zhbert.docslinter.service.help.HelpService;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Main {
