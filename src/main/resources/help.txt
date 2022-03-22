@@ -2,6 +2,12 @@
 DOCS-LINTER v.1.0
 A simple utility for checking documentation.
 
+The following file types are checked:
+  *.md
+  *.txt
+  *.liquid
+
 Available commands:
   --help (-h): Show this help text.
+  . or ./. run a recursive check of the entire directory.
 --------------------------------------------------------------------------------
