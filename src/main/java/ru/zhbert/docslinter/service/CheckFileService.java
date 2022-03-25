@@ -23,8 +23,13 @@ public class CheckFileService {
     }
 
     public void checkFile(File file) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        PrintStream old = System.out;
+
         maxLines = getLinesCount(file);
         boolean codeBlock = false;
+        boolean foundWords = false;
         int currentLine = 0;
         int firstColLen = 6;
         if (maxLines.toString().length() >= 6) {
@@ -36,6 +41,7 @@ public class CheckFileService {
         TableLinesService tableLinesService = new TableLinesService(dictMaxLen, firstColLen);
 
         System.out.println("Checking file: " + file.getName() + " from " + file.getParent() + "...");
+        System.setOut(ps);
         tableLinesService.printUpLine();
         System.out.format(format, "Line N", "In dict", "In docs");
         tableLinesService.printMediumLine();
@@ -62,6 +68,7 @@ public class CheckFileService {
                         } else correctForm = dictTerm.getFirstFromLineForm();
                         if (!innerStr.equals(correctForm)) {
                             System.out.format(format, currentLine, correctForm, innerStr);
+                            foundWords = true;
                         }
                     }
                     if (!dictTerm.getWrongForms().isEmpty()) {
@@ -75,6 +82,7 @@ public class CheckFileService {
                                     correctForm = dictTerm.getMainForm();
                                 } else correctForm = dictTerm.getFirstFromLineForm();
                                 System.out.format(format, currentLine, correctForm, innerStr);
+                                foundWords = true;
                             }
                         }
                     }
@@ -83,6 +91,11 @@ public class CheckFileService {
             line = reader.readLine();
         }
         tableLinesService.printDownLine();
+        System.out.flush();
+        System.setOut(old);
+        if (foundWords) {
+            System.out.println(baos.toString());
+        }
     }
 
     public void checkFilesInFolder(String path) {
