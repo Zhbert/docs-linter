@@ -23,9 +23,9 @@ public class CheckFileService {
     }
 
     public void checkFile(File file) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(baos);
-        PrintStream old = System.out;
+        ByteArrayOutputStream newOut = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(newOut);
+        PrintStream oldOut = System.out;
 
         maxLines = getLinesCount(file);
         boolean codeBlock = false;
@@ -92,9 +92,9 @@ public class CheckFileService {
         }
         tableLinesService.printDownLine();
         System.out.flush();
-        System.setOut(old);
+        System.setOut(oldOut);
         if (foundWords) {
-            System.out.println(baos.toString());
+            System.out.println(newOut.toString());
         }
     }
 
