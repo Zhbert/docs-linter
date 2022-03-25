@@ -24,7 +24,8 @@ public class CheckFileService {
 
     public void checkFile(File file) throws IOException {
         maxLines = getLinesCount(file);
-        Integer currentLine = 0;
+        boolean codeBlock = false;
+        int currentLine = 0;
         int firstColLen = 6;
         if (maxLines.toString().length() >= 6) {
             firstColLen = maxLines.toString().length();
@@ -44,30 +45,37 @@ public class CheckFileService {
         String line = reader.readLine();
         while (line != null) {
             currentLine++;
-            for (DictTerm dictTerm : dict) {
-                if (line.toLowerCase().contains(dictTerm.getMainForm().toLowerCase())) {
-                    int start = line.toLowerCase().indexOf(dictTerm.getMainForm().toLowerCase());
-                    int end = start + dictTerm.getMainForm().length();
-                    String innerStr = line.substring(start, end);
-                    String correctForm = "";
-                    if (start > 0) {
-                        correctForm = dictTerm.getMainForm();
-                    } else correctForm = dictTerm.getFirstFromLineForm();
-                    if (!innerStr.equals(correctForm)) {
-                        System.out.format(format, currentLine.toString(), correctForm, innerStr);
+            if (line.contains("```") &&  line.indexOf("```") == 0) {
+                if (!codeBlock) {
+                    codeBlock = true;
+                } else codeBlock = false;
+            }
+            if (!codeBlock) {
+                for (DictTerm dictTerm : dict) {
+                    if (line.toLowerCase().contains(dictTerm.getMainForm().toLowerCase())) {
+                        int start = line.toLowerCase().indexOf(dictTerm.getMainForm().toLowerCase());
+                        int end = start + dictTerm.getMainForm().length();
+                        String innerStr = line.substring(start, end);
+                        String correctForm = "";
+                        if (start > 0) {
+                            correctForm = dictTerm.getMainForm();
+                        } else correctForm = dictTerm.getFirstFromLineForm();
+                        if (!innerStr.equals(correctForm)) {
+                            System.out.format(format, currentLine, correctForm, innerStr);
+                        }
                     }
-                }
-                if (!dictTerm.getWrongForms().isEmpty()) {
-                    for (String wrongForm : dictTerm.getWrongForms()) {
-                        if (line.toLowerCase().contains(wrongForm.toLowerCase())) {
-                            int start = line.toLowerCase().indexOf(wrongForm.toLowerCase());
-                            int end = start + wrongForm.length();
-                            String innerStr = line.substring(start, end);
-                            String correctForm = "";
-                            if (start > 0) {
-                                correctForm = dictTerm.getMainForm();
-                            } else correctForm = dictTerm.getFirstFromLineForm();
-                            System.out.format(format, currentLine.toString(), correctForm, innerStr);
+                    if (!dictTerm.getWrongForms().isEmpty()) {
+                        for (String wrongForm : dictTerm.getWrongForms()) {
+                            if (line.toLowerCase().contains(wrongForm.toLowerCase())) {
+                                int start = line.toLowerCase().indexOf(wrongForm.toLowerCase());
+                                int end = start + wrongForm.length();
+                                String innerStr = line.substring(start, end);
+                                String correctForm = "";
+                                if (start > 0) {
+                                    correctForm = dictTerm.getMainForm();
+                                } else correctForm = dictTerm.getFirstFromLineForm();
+                                System.out.format(format, currentLine, correctForm, innerStr);
+                            }
                         }
                     }
                 }
