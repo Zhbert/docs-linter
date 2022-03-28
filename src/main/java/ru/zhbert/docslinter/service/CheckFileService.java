@@ -58,7 +58,7 @@ public class CheckFileService {
             }
             if (!codeBlock) {
                 for (DictTerm dictTerm : dict) {
-                    if (line.toLowerCase().contains(dictTerm.getMainForm().toLowerCase())) {
+                    if (line.toLowerCase().contains(" " + dictTerm.getMainForm().toLowerCase() + " ")) {
                         int start = line.toLowerCase().indexOf(dictTerm.getMainForm().toLowerCase());
                         int end = start + dictTerm.getMainForm().length();
                         String innerStr = line.substring(start, end);
@@ -73,7 +73,7 @@ public class CheckFileService {
                     }
                     if (!dictTerm.getWrongForms().isEmpty()) {
                         for (String wrongForm : dictTerm.getWrongForms()) {
-                            if (line.toLowerCase().contains(wrongForm.toLowerCase())) {
+                            if (line.toLowerCase().contains(" " + wrongForm.toLowerCase() + " ")) {
                                 int start = line.toLowerCase().indexOf(wrongForm.toLowerCase());
                                 int end = start + wrongForm.length();
                                 String innerStr = line.substring(start, end);
