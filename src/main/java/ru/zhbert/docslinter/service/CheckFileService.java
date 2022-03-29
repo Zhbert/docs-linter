@@ -6,6 +6,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CheckFileService {
 
@@ -22,7 +23,9 @@ public class CheckFileService {
         }
     }
 
-    public void checkFile(File file) throws IOException {
+    public int checkFile(File file) throws IOException {
+        int coincidenceCount = 0;
+
         ByteArrayOutputStream newOut = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(newOut);
         PrintStream oldOut = System.out;
@@ -69,6 +72,7 @@ public class CheckFileService {
                         if (!innerStr.equals(correctForm)) {
                             System.out.format(format, currentLine, correctForm, innerStr);
                             foundWords = true;
+                            coincidenceCount++;
                         }
                     }
                     if (!dictTerm.getWrongForms().isEmpty()) {
@@ -83,6 +87,7 @@ public class CheckFileService {
                                 } else correctForm = dictTerm.getFirstFromLineForm();
                                 System.out.format(format, currentLine, correctForm, innerStr);
                                 foundWords = true;
+                                coincidenceCount++;
                             }
                         }
                     }
@@ -96,9 +101,12 @@ public class CheckFileService {
         if (foundWords) {
             System.out.println(newOut.toString());
         }
+        return coincidenceCount;
     }
 
     public void checkFilesInFolder(String path) {
+        AtomicInteger filesCount = new AtomicInteger();
+        AtomicInteger coincidenceCount = new AtomicInteger();
         try {
             Files.walk(Paths.get(path))
                     .forEach(file -> {
@@ -109,7 +117,8 @@ public class CheckFileService {
                                     fileName.substring(i+1).equals("txt") ||
                                     fileName.substring(i+1).equals("liquid")) {
                                 try {
-                                    checkFile(file.toFile());
+                                    coincidenceCount.addAndGet(checkFile(file.toFile()));
+                                    filesCount.getAndIncrement();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -119,6 +128,8 @@ public class CheckFileService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Scanned files: " + filesCount.get());
+        System.out.println("A match was found: " + coincidenceCount.get());
     }
 
     private Integer getLinesCount(File file) throws IOException {
