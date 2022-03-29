@@ -40,8 +40,8 @@ public class CheckFileService {
                 dictMaxLen + "s |%n";
         TableLinesService tableLinesService = new TableLinesService(dictMaxLen, firstColLen);
 
-        System.out.println("Checking file: " + file.getName() + " from " + file.getParent() + "...");
         System.setOut(ps);
+        System.out.println("Checking file: " + file.getName() + " from " + file.getParent() + "...");
         tableLinesService.printUpLine();
         System.out.format(format, "Line N", "In dict", "In docs");
         tableLinesService.printMediumLine();
